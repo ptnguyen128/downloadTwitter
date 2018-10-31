@@ -1,7 +1,4 @@
 def get_media(tweets, type):
-    '''
-    Get all urls of user's photos/videos
-    '''
     photos = set()
     videos = set()
     for status in tweets:
