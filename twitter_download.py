@@ -3,7 +3,7 @@ import tweepy
 import wget
 import pandas as pd
 
-from input_data import *
+from config import *
 
 # API's setup
 def twitter_setup():
