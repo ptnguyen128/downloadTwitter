@@ -54,7 +54,7 @@ def get_all_tweets(screen_name, count, extend):
             #save most recent tweets
             alltweets.extend(new_tweets)
 
-            #update the id of the oldest tweet less one
+            #update the id of the oldest tweet minus one
             oldest = alltweets[-1].id - 1
 
             print("...%s tweets fetched so far" % (len(alltweets)))
@@ -110,7 +110,7 @@ def download_images(photo_urls, output_folder):
 
 def download_videos(username, video_urls, output_folder, download=False):
     if download == False:
-        data = pd.DataFrame(data = [url for url in video_urls], columns=['Video Links'])
+        data = pd.DataFrame(data = [url[:-6] for url in video_urls], columns=['Video Links'])
         # write to csv file
         data.to_csv(username+'_video_urls.csv', index=False)
         print("Writing complete!")
@@ -120,7 +120,7 @@ def download_videos(username, video_urls, output_folder, download=False):
             # Only download if video hasn't been in the folder yet
             file_name = os.path.split(url)[1]
             if not os.path.exists(os.path.join(output_folder, file_name)):
-                wget.download(url, out = output_folder+'/'+file_name)
+                wget.download(url[:-6], out = output_folder+'/'+file_name)
         print("Download complete!")
 
 def main():
