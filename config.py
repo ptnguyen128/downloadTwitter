@@ -17,7 +17,7 @@ N_TWEETS = 200
 EXTEND_STATE = True
 
 # Enter 'photo' if you want to download photos
-# Enter 'video' if you want to fetch video links
+# Enter 'video' if you want to fetch video links or download videos
 FILE_TYPE = 'photo'
 
 # False if you don't want to download videos
