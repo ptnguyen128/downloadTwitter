@@ -110,6 +110,7 @@ def download_images(photo_urls, output_folder):
 
 def download_videos(username, video_urls, output_folder, download=False):
     if download == False:
+        # use url[:-6] to remove tag in file extension
         data = pd.DataFrame(data = [url[:-6] for url in video_urls], columns=['Video Links'])
         # write to csv file
         data.to_csv(username+'_video_urls.csv', index=False)
@@ -121,7 +122,7 @@ def download_videos(username, video_urls, output_folder, download=False):
             file_name = os.path.split(url)[1]
             if not os.path.exists(os.path.join(output_folder, file_name)):
                 wget.download(url[:-6], out = output_folder+'/'+file_name)
-        print("Download complete!")
+        print("Video download complete!")
 
 def main():
     url_type = FILE_TYPE
@@ -137,9 +138,9 @@ def main():
 
         if url_type == 'photo':
             download_images(urls, outdir)
-            print("Download complete!")
+            print("Photo download complete!")
         elif url_type == 'video':
-            download_videos(name, urls, outdir, download=True)
+            download_videos(name, urls, outdir, download=False)
 
 if __name__=='__main__':
     main()
