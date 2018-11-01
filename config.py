@@ -12,9 +12,17 @@ CREDENTIALS = {
 # maximum is 200
 N_TWEETS = 200
 
+# False if you don't want to fetch tweets continuously
+# True if you do
+EXTEND_STATE = True
+
 # Enter 'photo' if you want to download photos
 # Enter 'video' if you want to fetch video links
 FILE_TYPE = 'photo'
+
+# False if you don't want to download videos
+# True if you want to download videos
+VIDEO_DL = False
 
 # List of users to fetch tweets
 USERS = ['user_1']

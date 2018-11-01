@@ -132,7 +132,7 @@ def main():
         print("Fetching tweets for user %s......." % name)
 
         # set extend to False if you don't want to fetch tweets continuously
-        tweets = get_all_tweets(name, N_TWEETS, extend=False)
+        tweets = get_all_tweets(name, N_TWEETS, extend=EXTEND_STATE)
 
         urls = get_media(tweets, type=url_type)
 
@@ -140,7 +140,7 @@ def main():
             download_images(urls, outdir)
             print("Photo download complete!")
         elif url_type == 'video':
-            download_videos(name, urls, outdir, download=True)
+            download_videos(name, urls, outdir, download=VIDEO_DL)
 
 if __name__=='__main__':
     main()
