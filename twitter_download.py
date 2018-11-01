@@ -86,7 +86,8 @@ def get_media(tweets, type):
                     for var in variants:
                         if var['content_type'] == 'video/mp4':
                             bitrates.append(var['bitrate'])
-                    videos.add(variants[np.argmax(bitrates)]['url'])
+                    # use url[:-6] to remove tag in file extension
+                    videos.add(variants[np.argmax(bitrates)]['url'][:-6])
         else:
             continue
 
@@ -110,8 +111,7 @@ def download_images(photo_urls, output_folder):
 
 def download_videos(username, video_urls, output_folder, download=False):
     if download == False:
-        # use url[:-6] to remove tag in file extension
-        data = pd.DataFrame(data = [url[:-6] for url in video_urls], columns=['Video Links'])
+        data = pd.DataFrame(data = [url for url in video_urls], columns=['Video Links'])
         # write to csv file
         data.to_csv(username+'_video_urls.csv', index=False)
         print("Writing complete!")
@@ -121,7 +121,7 @@ def download_videos(username, video_urls, output_folder, download=False):
             # Only download if video hasn't been in the folder yet
             file_name = os.path.split(url)[1]
             if not os.path.exists(os.path.join(output_folder, file_name)):
-                wget.download(url[:-6], out = output_folder+'/'+file_name)
+                wget.download(url, out = output_folder+'/'+file_name)
         print("Video download complete!")
 
 def main():
@@ -132,7 +132,7 @@ def main():
         print("Fetching tweets for user %s......." % name)
 
         # set extend to False if you don't want to fetch tweets continuously
-        tweets = get_all_tweets(name, N_TWEETS, extend=True)
+        tweets = get_all_tweets(name, N_TWEETS, extend=False)
 
         urls = get_media(tweets, type=url_type)
 
@@ -140,7 +140,7 @@ def main():
             download_images(urls, outdir)
             print("Photo download complete!")
         elif url_type == 'video':
-            download_videos(name, urls, outdir, download=False)
+            download_videos(name, urls, outdir, download=True)
 
 if __name__=='__main__':
     main()
