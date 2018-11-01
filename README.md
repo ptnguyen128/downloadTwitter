@@ -1,5 +1,5 @@
 # downloadTwitter
-Automatically download photos from a (list of) user, or fetch the video links in the tweets.
+Automatically download photos/videos from a (list of) user.
 
 ## Requirements
 You must have python installed. You can follow the instructions and download python [here](https://www.python.org/downloads/). Any version of python can work with this library, but I recommend Python 2.7.9 (or greater), or Python 3.4 (or greater) because they come with `pip` installed by default.    
