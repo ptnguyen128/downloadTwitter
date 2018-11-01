@@ -79,7 +79,7 @@ def get_media(tweets, type):
                     photos.add(media[i]['media_url'])
                 # if media file is video, get .mp4 url
                 elif media[i]['type'] == 'video':
-                    videos.add(media[i]['video_info'].get('variants')[0]['url'])
+                    videos.add(media[i]['video_info'].get('variants')[-2]['url'])
         else:
             continue
 
