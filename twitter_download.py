@@ -82,9 +82,10 @@ def get_media(tweets, type):
                 elif media[i]['type'] == 'video':
                     # get the link with the highest bitrate (highest quality)
                     bitrates=[]
-                    variants = media[i]['video_info'].get('variants')
-                    for i in range(len(variants)-1):
-                        bitrates.append(variants[i]['bitrate'])
+                    variants = media[i]['video_info'].get('variants', [])
+                    for var in variants:
+                        if var['content_type'] == 'video/mp4':
+                            bitrates.append(var['bitrate'])
                     videos.add(variants[np.argmax(bitrates)]['url'])
         else:
             continue
@@ -138,7 +139,7 @@ def main():
             download_images(urls, outdir)
             print("Download complete!")
         elif url_type == 'video':
-            download_videos(name, urls, outdir)
+            download_videos(name, urls, outdir, download=True)
 
 if __name__=='__main__':
     main()
