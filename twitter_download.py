@@ -2,6 +2,7 @@ import os, sys
 import tweepy
 import wget
 import pandas as pd
+import numpy as np
 
 from config import *
 
@@ -79,7 +80,12 @@ def get_media(tweets, type):
                     photos.add(media[i]['media_url'])
                 # if media file is video, get .mp4 url
                 elif media[i]['type'] == 'video':
-                    videos.add(media[i]['video_info'].get('variants')[-2]['url'])
+                    # get the link with the highest bitrate (highest quality)
+                    bitrates=[]
+                    variants = media[i]['video_info'].get('variants')
+                    for i in range(len(variants)-1):
+                        bitrates.append(variants[i]['bitrate'])
+                    videos.add(variants[np.argmax(bitrates)]['url'])
         else:
             continue
 
