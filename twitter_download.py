@@ -101,10 +101,20 @@ def download_images(photo_urls, output_folder):
         if not os.path.exists(os.path.join(output_folder, file_name)):
             wget.download(url +":orig", out = output_folder+'/'+file_name)
 
-def get_video_urls(username, video_urls):
-    data = pd.DataFrame(data = [url for url in video_urls], columns=['Video Links'])
-    # write to csv file
-    data.to_csv(username+'_video_urls.csv', index=False)
+def download_videos(username, video_urls, output_folder, download=False):
+    if download == False:
+        data = pd.DataFrame(data = [url for url in video_urls], columns=['Video Links'])
+        # write to csv file
+        data.to_csv(username+'_video_urls.csv', index=False)
+        print("Writing complete!")
+    else:
+        create_folder(output_folder)
+        for url in video_urls:
+            # Only download if video hasn't been in the folder yet
+            file_name = os.path.split(url)[1]
+            if not os.path.exists(os.path.join(output_folder, file_name)):
+                wget.download(url, out = output_folder+'/'+file_name)
+        print("Download complete!")
 
 def main():
     url_type = FILE_TYPE
@@ -122,8 +132,7 @@ def main():
             download_images(urls, outdir)
             print("Download complete!")
         elif url_type == 'video':
-            get_video_urls(name, urls)
-            print("Writing complete!")
+            download_videos(name, urls, outdir)
 
 if __name__=='__main__':
     main()
